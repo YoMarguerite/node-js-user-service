@@ -19,8 +19,8 @@ const deleteUser = "DELETE FROM user WHERE id = ?;";
 var sql = {
 
     connectUser: function (req, res) {
-        var login = req.body.login;
-        var pwd = req.body.pwd;
+        var login = req.query.login;
+        var pwd = req.query.pwd;
         con.query(getUserByLogin, [login], function (err, result) {
             if (err) throw err;
             if(result[0] != undefined){
