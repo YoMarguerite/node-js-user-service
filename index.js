@@ -15,16 +15,32 @@ var myRouter = express.Router();
 
 myRouter.route('/user')
     .get(function(req, res){
-        sql.connectUser(req, res);
+        try{
+            sql.connectUser(req, res);
+        }catch(err){
+            console.log(err);
+        }
     })
     .post(function(req,res){
-        sql.registerUser(req,res);
+        try{
+            sql.registerUser(req,res);
+        }catch(err){
+            console.log(err)
+        }
     })
     .put(function(req, res){
-        sql.modifUser(req, res);
+        try{
+            sql.modifUser(req, res);
+        }catch(err){
+            console.log(err)
+        }
     })
     .delete(function(req,res){
-        sql.deleteUser(req, res);
+        try{
+            sql.deleteUser(req, res);
+        }catch(err){
+            console.log(err)
+        }
     })
  
 app.use(myRouter);
