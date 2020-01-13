@@ -19,14 +19,16 @@ app.use(function(req, res, next) {
 
 var myRouter = express.Router();
 
-myRouter.route('/user')
-    .get(function(req, res){
+myRouter.route('/login')
+    .post(function(req, res){
         try{
             sql.connectUser(req, res);
         }catch(err){
             console.log(err);
         }
     })
+
+myRouter.route('/user')
     .post(function(req,res){
         try{
             sql.registerUser(req,res);

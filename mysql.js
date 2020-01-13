@@ -9,8 +9,6 @@ var con = mysql.createConnection({
   database:"wibes"
 });
 
-const getUsers = "SELECT * FROM user;";
-const getUserById = "SELECT * FROM user WHERE id = ?;";
 const getUserByLogin = "SELECT * FROM user WHERE login=?;";
 const insertUser = "INSERT INTO user (login, mail, pwd) VALUES (?,?,?);";
 const updateUser = "UPDATE user SET login = ?, mail = ?, pwd = ? WHERE id = ?;";
@@ -19,8 +17,8 @@ const deleteUser = "DELETE FROM user WHERE id = ?;";
 var sql = {
 
     connectUser: function (req, res) {
-        var login = req.query.login;
-        var pwd = req.query.pwd;
+        let login = req.body.login;
+        let pwd = req.body.pwd;
         con.query(getUserByLogin, [login], function (err, result) {
             if (err) throw err;
             if(result[0] != undefined){
@@ -33,14 +31,13 @@ var sql = {
             }else{
                 res.json({"error":"Le login n'existe pas..."})
             }
-
         });
     },
 
     registerUser: function (req, res) {
-      var login = req.body.login;
-      var mail = req.body.mail;
-      var pwd = req.body.pwd;
+      let login = req.body.login;
+      let mail = req.body.mail;
+      let pwd = req.body.pwd;
       con.query(getUserByLogin, [login], function (err, result) {
           if (err) throw err;
           if(result[0] === undefined){
@@ -56,10 +53,10 @@ var sql = {
     },
 
     modifUser: function(req, res){
-      var id = req.body.id;
-      var login = req.body.login;
-      var mail = req.body.mail;
-      var pwd = req.body.pwd;
+      let id = req.body.id;
+      let login = req.body.login;
+      let mail = req.body.mail;
+      let pwd = req.body.pwd;
       con.query(getUserByLogin, [login], function (err, result) {
           if (err) throw err;
           if ((result[0] === undefined)||(result[0].id == id)) {
@@ -75,7 +72,7 @@ var sql = {
     },
 
     deleteUser: function(req, res){
-        var id = req.body.id;
+        let id = req.body.id;
         con.query(deleteUser, [id], function(err, result) {
             if (err) throw err;
             res.json(result)
