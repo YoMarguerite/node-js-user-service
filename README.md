@@ -5,3 +5,6 @@ npm i
 
 START
 node index.js
+
+TEST
+npm test
