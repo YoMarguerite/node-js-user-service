@@ -50,25 +50,32 @@ app.use(function(req, res, next) {
 
 var myRouter = express.Router();
 
-/**
- * This function comment is parsed by doctrine
- * @route POST /login connect an user
- * @group Login - Use for sign in
- * @param {string} login - user's login
- * @param {string} pwd - user's password
- * @returns {object} 200 - return user's data
- *                         |_ if login doesn't exist, return object with a message error 
- *                         |_ if password is incorrect, return object with a message error
- *                         |_ if login or password typeof !== 'string', return object with a message error
- *                         |_ Unexpected error
- */
+
 myRouter.route('/login')
+    /**
+     * get all users
+     * @route GET /login get all users
+     * @group Login - Use for sign in
+     * @returns {object} 200 - return all user, test route
+     */
     .get(function(req, res){
         sql.getUsers(req, res).
             catch((err) => {
                 console.log(err);
             })
     })
+    /**
+     * connect an user
+     * @route POST /login connect an user
+     * @group Login - Use for sign in
+     * @param {string} login - user's login
+     * @param {string} pwd - user's password
+     * @returns {object} 200 - return user's data
+     *                         |_ if login doesn't exist, return object with a message error 
+     *                         |_ if password is incorrect, return object with a message error
+     *                         |_ if login or password typeof !== 'string', return object with a message error
+     *                         |_ Unexpected error
+     */
     .post(function(req, res){
         sql.connectUser(req, res).
         catch((err) => {
@@ -79,7 +86,7 @@ myRouter.route('/login')
 myRouter.route('/user')
 
     /**
-     * This function comment is parsed by doctrine
+     * Use to manage user account
      * @route POST /user create a new user
      * @group User - Use to manage user account
      * @param {string} login - user's login
@@ -97,7 +104,7 @@ myRouter.route('/user')
     })
 
     /**
-     * This function comment is parsed by doctrine
+     * Use to manage user account
      * @route PUT /user modify an user
      * @group User - Use to manage user account
      * @param {string} id - user's id
@@ -116,7 +123,7 @@ myRouter.route('/user')
     })
 
     /**
-     * This function comment is parsed by doctrine
+     * Use to manage user account
      * @route DELETE /user delete an user
      * @group User - Use to manage user account
      * @param {string} id - user's id
@@ -133,7 +140,7 @@ myRouter.route('/user')
 app.use(myRouter);
 
 app.listen(port, hostname, function(){
-	//console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port+"\n"); 
+	console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port+"\n"); 
 });
 
 module.exports = app;
