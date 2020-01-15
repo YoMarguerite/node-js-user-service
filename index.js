@@ -5,7 +5,7 @@ var sql = require("./mysql.js");
 var app = express();
 const expressSwagger = require('express-swagger-generator')(app);
 var hostname = 'localhost'; 
-var port = 3000; 
+var port = 3003; 
 
 let options = {
     swaggerDefinition: {
