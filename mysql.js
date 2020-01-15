@@ -9,6 +9,7 @@ var con = mysql.createConnection({
   database:"wibes"
 });
 
+const selectAllUser = "SELECT * from user";
 const getUserByLogin = "SELECT * FROM user WHERE login=?;";
 const insertUser = "INSERT INTO user (login, mail, pwd) VALUES (?,?,?);";
 const updateUser = "UPDATE user SET login = ?, mail = ?, pwd = ? WHERE id = ?;";
@@ -16,7 +17,13 @@ const deleteUser = "DELETE FROM user WHERE id = ?;";
 
 var sql = {
 
-    connectUser: function (req, res) {
+    getUsers: async function (req, res) {
+        con.query(selectAllUser, function(err, result) {
+            res.json(result);
+        })
+    },
+
+    connectUser: async function (req, res) {
         try{
             let login = req.body.login;
             let pwd = req.body.pwd;
@@ -36,7 +43,7 @@ var sql = {
                     }catch(err){
                         res.json({error:err})
                     }
-                });
+                })
             }else{
                 res.json({error:"Les paramètres login et pwd sont invalides..."})
             }
@@ -45,7 +52,7 @@ var sql = {
         }
     },
 
-    registerUser: function (req, res) {
+    registerUser: async function (req, res) {
         try{
             let login = req.body.login;
             let mail = req.body.mail;
@@ -68,9 +75,10 @@ var sql = {
         }catch(err){
             res.json({error:err})
         }
+        return res;
     },
 
-    modifUser: function(req, res){
+    modifUser: async function(req, res){
         try{
             let id = req.body.id;
             let login = req.body.login;
@@ -94,9 +102,10 @@ var sql = {
         }catch(err){
             res.json({error:err})
         }
+        return res;
     },
 
-    deleteUser: function(req, res){
+    deleteUser: async function(req, res){
         try{
             let id = req.body.id;
             con.query(deleteUser, [id], function(err, result) {
@@ -109,6 +118,7 @@ var sql = {
         }catch(err){
             res.json({error:err})
         }
+        return res;
     }
 }
 

@@ -63,12 +63,17 @@ var myRouter = express.Router();
  *                         |_ Unexpected error
  */
 myRouter.route('/login')
+    .get(function(req, res){
+        sql.getUsers(req, res).
+            catch((err) => {
+                console.log(err);
+            })
+    })
     .post(function(req, res){
-        try{
-            sql.connectUser(req, res);
-        }catch(err){
+        sql.connectUser(req, res).
+        catch((err) => {
             console.log(err);
-        }
+        })
     })
 
 myRouter.route('/user')
@@ -85,11 +90,10 @@ myRouter.route('/user')
      *                         |_ Unexpected error
      */
     .post(function(req,res){
-        try{
-            sql.registerUser(req,res);
-        }catch(err){
-            console.log(err)
-        }
+        sql.registerUser(req,res).
+            catch((err)=>{
+                console.log(err);
+            });
     })
 
     /**
@@ -105,11 +109,10 @@ myRouter.route('/user')
      *                         |_ Unexpected error
      */
     .put(function(req, res){
-        try{
-            sql.modifUser(req, res);
-        }catch(err){
-            console.log(err)
-        }
+        sql.modifUser(req, res).
+            catch((err) => {
+                console.log(err);
+            });
     })
 
     /**
@@ -121,15 +124,16 @@ myRouter.route('/user')
      *                         |_ Unexpected error
      */
     .delete(function(req,res){
-        try{
-            sql.deleteUser(req, res);
-        }catch(err){
-            console.log(err)
-        }
+        sql.deleteUser(req, res).
+            catch((err) => {
+                console.log(err)
+            })
     })
  
 app.use(myRouter);
 
 app.listen(port, hostname, function(){
-	console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port+"\n"); 
+	//console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port+"\n"); 
 });
+
+module.exports = app;
